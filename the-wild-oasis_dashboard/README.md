@@ -1,75 +1,269 @@
-# React + TypeScript + Vite
+# The Wild Oasis – Dashboard Web App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A **production‑ready internal hotel management dashboard** built for **The Wild Oasis**, a luxury boutique hotel with 8 exclusive cabins.
 
-Currently, two official plugins are available:
+This application is **not public‑facing**. It is designed exclusively for **hotel employees** to manage cabins, bookings, guests, payments, and hotel operations efficiently.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🏨 Project Overview
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+The Wild Oasis Dashboard is a modern, fast, and secure web application that allows hotel staff to:
 
-Note: This will impact Vite dev & build performances.
+* Manage cabins (pricing, capacity, discounts, photos)
+* Manage bookings and guest check‑ins / check‑outs
+* Track payments and extras (breakfast)
+* View real‑time business insights and statistics
+* Control application‑wide hotel settings
 
-## Expanding the ESLint configuration
+Authentication is **mandatory**, and **new users can only be created from inside the app** to ensure that **only real hotel employees** can access the system.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🧑‍💼 Target Users
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+* Hotel reception staff
+* Hotel managers
+* Internal operations team
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+⚠️ This app is **not intended for guests or public use**.
+
+---
+
+## ✨ Core Features
+
+### 🔐 Authentication & User Management
+
+* Secure login required to access the application
+* New users can **only be registered inside the app** (no public sign‑ups)
+* Users can:
+
+  * Upload and update their avatar
+  * Change their name
+  * Change their password
+
+---
+
+### 🏡 Cabin Management
+
+* Table view listing all cabins
+
+* Each cabin displays:
+
+  * Cabin photo
+  * Name
+  * Maximum capacity
+  * Price per night
+  * Current discount
+
+* Full CRUD functionality:
+
+  * Create new cabins (with image upload)
+  * Update existing cabins
+  * Delete cabins
+
+---
+
+### 📅 Booking Management
+
+* Table view showing all bookings
+* Booking data includes:
+
+  * Arrival date
+  * Departure date
+  * Booking status
+  * Paid amount
+  * Cabin information
+  * Guest information
+
+#### Booking Statuses
+
+* **Unconfirmed** – booked but not yet checked in
+* **Checked in**
+* **Checked out**
+
+Bookings can be filtered by status for fast operational workflows.
+
+---
+
+### 🧾 Booking Actions
+
+* Delete a booking
+* Check guests in
+* Check guests out
+
+💳 **Payments**
+
+* Bookings may arrive unpaid
+* On check‑in:
+
+  * Payment is accepted **outside the app**
+  * Staff confirms payment **inside the app**
+
+🥐 **Breakfast Add‑On**
+
+* Guests can add breakfast at check‑in if not already included
+* Breakfast applies to the **entire stay**
+
+---
+
+### 👤 Guest Management
+
+Guest data includes:
+
+* Full name
+* Email address
+* National ID
+* Nationality
+* Country flag (for quick visual identification)
+
+---
+
+### 📊 Dashboard & Analytics
+
+The initial screen is a **dashboard** with key business insights.
+
+#### Time Ranges
+
+* Last 7 days
+* Last 30 days
+* Last 90 days
+
+#### Dashboard Widgets
+
+* Guests checking **in today**
+* Guests checking **out today**
+* Quick check‑in / check‑out actions
+
+#### Statistics
+
+* Recent bookings
+* Total sales
+* Check‑ins
+* Occupancy rate
+
+#### Charts
+
+* 📈 Daily hotel sales
+
+  * Total sales
+  * Extras sales (breakfast)
+
+* 📊 Stay duration statistics
+
+  * Average stay length
+  * Distribution of stay durations
+
+---
+
+### ⚙️ Application Settings
+
+Configurable global settings:
+
+* Breakfast price
+* Minimum nights per booking
+* Maximum nights per booking
+* Maximum guests per booking
+
+---
+
+### 🌙 Dark Mode
+
+* Fully supported dark mode
+* Theme‑aware UI components
+* System‑friendly and eye‑comfortable for night shifts
+
+---
+
+## 🛠 Tech Stack
+
+### ⚛️ Frontend
+
+* **React 19**
+* **TypeScript**
+* **Vite** (fast development & build tooling)
+* **React Router v7**
+
+---
+
+### 🎨 UI & Styling
+
+* **Tailwind CSS v4**
+* **shadcn/ui** (Radix‑based component system)
+* **Radix UI primitives**
+* **Lucide Icons**
+* **React Icons**
+* **Motion (Framer Motion successor)** for animations
+
+---
+
+### 📋 Forms & Validation
+
+* **React Hook Form**
+* **Zod** (schema validation)
+* **@hookform/resolvers**
+
+---
+
+### 📡 Data & State Management
+
+* **Supabase**
+
+  * Authentication
+  * Database
+  * File storage (avatars, cabin images)
+
+* **TanStack React Query**
+
+  * Server state management
+  * Caching & revalidation
+
+---
+
+### 📊 Charts & Dates
+
+* **Recharts** (charts & visual analytics)
+* **date‑fns** (date utilities)
+
+---
+
+### 🧪 DX & Quality
+
+* **ESLint** (strict linting)
+* **TypeScript 5**
+* **React Error Boundary**
+* **Hot Toast notifications**
+
+---
+
+## 📦 Project Scripts
+
+```bash
+npm run dev       # Start development server
+npm run build     # Type check + production build
+npm run preview   # Preview production build
+npm run lint      # Lint the codebase
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🔒 Security Notes
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+* No public user registration
+* Authentication handled via Supabase
+* Sensitive operations protected by route guards
+* Only authenticated employees can access dashboard features
+
+---
+
+## 🚀 Status
+
+✅ Production‑ready
+
+This dashboard is built with scalability, performance, and maintainability in mind, following modern best practices for enterprise‑grade React applications.
+
+---
+
+## 📄 License
+
+Private – Internal use only for **The Wild Oasis**.
