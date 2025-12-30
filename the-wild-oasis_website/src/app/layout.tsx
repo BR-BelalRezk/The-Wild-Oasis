@@ -1,13 +1,21 @@
+import Header from "@/components/layout/header";
+import Providers from "@/components/providers";
 import "@/styles/globals.css";
-
+import { cn } from "@/utils";
 import type { Metadata } from "next";
+import { Josefin_Sans } from "next/font/google";
+
+const josefinSans = Josefin_Sans({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.thewildoasis.com"),
 
   title: {
     default: "The Wild Oasis | Website",
-    template: "%s | The Wild Oasis",
+    template: "The Wild Oasis | %s",
   },
 
   description:
@@ -71,7 +79,7 @@ export const metadata: Metadata = {
 
   themeColor: "#0f2a1d",
   icons: {
-    icon: "/logo-light.png",
+    icon: "/logo.png",
     apple: "/apple-touch-icon.png",
   },
 };
@@ -82,7 +90,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>{children}</body>
+      <body
+        className={cn(
+          "antialiased min-h-screen bg-primary-950 text-primary-50",
+          josefinSans.className
+        )}
+      >
+        <Providers>
+          <Header />
+          <main>{children}</main>
+        </Providers>
+      </body>
     </html>
   );
 }
