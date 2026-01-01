@@ -89,16 +89,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ scrollbarWidth: "none" }}>
       <body
         className={cn(
-          "antialiased min-h-screen bg-primary-950 text-primary-50",
+          "antialiased min-h-screen bg-primary-950 text-primary-50 overflow-x-hidden flex flex-col",
           josefinSans.className
         )}
       >
         <Providers>
           <Header />
-          <main>{children}</main>
+          <main className="flex-1 container grid">{children}</main>
         </Providers>
       </body>
     </html>

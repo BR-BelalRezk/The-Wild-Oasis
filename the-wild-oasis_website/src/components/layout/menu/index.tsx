@@ -11,10 +11,12 @@ import {
 import { motion, AnimatePresence } from "motion/react";
 import { usePathname } from "next/navigation";
 import { transition } from "@/constants";
+import { cn } from "@/utils";
 
 type MenuContextType = {
   toggle: boolean;
   setToggle: (toggle: boolean) => void;
+  isDesktop: boolean;
 };
 
 const MenuContext = createContext<MenuContextType | null>(null);
@@ -31,25 +33,24 @@ const DESKTOP_QUERY = "(min-width: 1024px)";
 
 const Menu = ({ children, ...props }: React.HTMLAttributes<HTMLElement>) => {
   const [toggle, setToggle] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
     const media = window.matchMedia(DESKTOP_QUERY);
 
-    const syncToggleWithViewport = () => {
+    const sync = () => {
+      setIsDesktop(media.matches);
       setToggle(media.matches);
     };
 
-    syncToggleWithViewport();
+    sync();
+    media.addEventListener("change", sync);
 
-    media.addEventListener("change", syncToggleWithViewport);
-
-    return () => {
-      media.removeEventListener("change", syncToggleWithViewport);
-    };
+    return () => media.removeEventListener("change", sync);
   }, []);
 
   return (
-    <MenuContext.Provider value={{ toggle, setToggle }}>
+    <MenuContext.Provider value={{ toggle, setToggle, isDesktop }}>
       <nav {...props}>{children}</nav>
     </MenuContext.Provider>
   );
@@ -59,7 +60,7 @@ const MenuList = ({
   children,
   className,
 }: React.HTMLAttributes<HTMLUListElement> & {}) => {
-  const { toggle } = useMenu();
+  const { toggle, isDesktop } = useMenu();
   return (
     <AnimatePresence mode="wait">
       {toggle && (
@@ -67,9 +68,9 @@ const MenuList = ({
           className={className}
           variants={{
             open: {
-              borderRadius: 25,
-              width: 250,
-              height: 350,
+              borderRadius: isDesktop ? 0 : 25,
+              width: isDesktop ? "auto" : 200,
+              height: isDesktop ? "auto" : 250,
               transition: {
                 ...transition,
                 delayChildren: 0.75,
@@ -80,7 +81,7 @@ const MenuList = ({
               borderRadius: 25,
               width: 44,
               height: 44,
-              transition: { ...transition, delay: 1 },
+              transition: { ...transition, delay: 0.2 },
             },
           }}
           initial="close"
@@ -104,7 +105,7 @@ const MenuListItem = ({
   const pathname = usePathname();
   return (
     <motion.li
-      className={className}
+      className={cn(className, "w-full text-nowrap")}
       variants={{
         open: {
           opacity: 1,
@@ -118,9 +119,12 @@ const MenuListItem = ({
         },
       }}
     >
-      <Link href={href} className="relative">
+      <Link
+        href={href}
+        className="relative z-20 flex w-full items-center justify-between py-1 px-3"
+      >
         {children}
-        {pathname === href.replace("/", "") && (
+        {pathname === href && (
           <motion.span
             layoutId={"menu"}
             transition={{
@@ -129,7 +133,7 @@ const MenuListItem = ({
               stiffness: 150,
               damping: 15,
             }}
-            className=""
+            className="size-3 bg-accent-950 rounded-full lg:size-auto lg:inset-0 lg:absolute lg:-z-10 lg:bg-accent-800"
           />
         )}
       </Link>
